@@ -1,3 +1,3 @@
-from api import *
-from rdf4j import *
-from ldp import *
+from .api import *
+from .rdf4j import *
+from .ldp import *

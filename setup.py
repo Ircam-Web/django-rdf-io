@@ -18,7 +18,7 @@ setup(
     name='django-rdf-io',
     version = VERSION,
     description='Pluggable application for mapping elements of django models to an external RDF store',
-    packages=['rdf_io'],
+    packages=find_packages(),
     include_package_data=True,
     author='Rob Atkinson',
     author_email='rob@metalinkage.com,au',
