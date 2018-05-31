@@ -784,7 +784,7 @@ class ImportedResource(models.Model):
         if os.path.isfile(self.file.path):
             os.remove(self.file.path)
         if self.target_repo :
-            print "TODO - delete remote resource in repo %s" % self.target_repo
+            print("TODO - delete remote resource in repo %s" % self.target_repo)
         super(ImportedResource, self).delete(*args,**kwargs)
     
     def save(self,*args,**kwargs): 
@@ -823,10 +823,4 @@ class ImportedResource(models.Model):
         # check if a literal now!
         for res in results:
             return res[0]
-    
-    
-    
-    
-    
-    
     
