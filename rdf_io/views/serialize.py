@@ -141,7 +141,7 @@ def pub_rdf(request,model,id):
 def get_rdfstore(model, name=None ):
     # now get the remote store mappings 
     # deprecated - using ConfigVar and ServiceBindings now..
-    print "Warning - deprecated method invoked - use ServiceBindings instead of static config now"
+    print("Warning - deprecated method invoked - use ServiceBindings instead of static config now")
     return None
     # if name :
         # rdfstore_cfg = settings.RDFSTORES[name]
@@ -319,7 +319,7 @@ def build_rdf( gr,obj, oml, includemembers ) :
                             _add_vals(gr, value, subject, em.predicate, expr , is_resource)
             except Exception as e:
                 import traceback; import sys; traceback.print_exc()
-                print "Could not evaluate extended mapping %s : %s " % (e,em.attr), sys.exc_info()
+                print("Could not evaluate extended mapping %s : %s " % (e,em.attr), sys.exc_info())
                 raise ValueError("Could not evaluate extended mapping %s : %s " % (e,em.attr))
     # do this after looping through all object mappings!
     return gr
