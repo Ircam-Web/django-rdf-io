@@ -350,7 +350,7 @@ def as_uri(value):
     try:
         parts = value.split(":")
         if len(parts) == 2 :
-			return value
+            return value
     except:
         pass
     return value.join("<",">")
