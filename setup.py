@@ -27,10 +27,5 @@ setup(
     #download_url = "https://github.com/quinode/django-skosxl/tarball/%s" % (VERSION),
     #download_url='git://github.com/quinode/django-skosxl.git',
     zip_safe=False,
-    install_requires = ['rdflib>=4.0',
-                        'rdflib-jsonld',
-                        'requests'
-                        ]
-
 )
 
