@@ -5,6 +5,7 @@ Utilities to link Django to RDF stores and inferencers.
 Why: Allows semantic data models and rules to be used to generate rich views of content, and expose standardised access and query interfaces - such as SPARQL and the Linked Data Platform.  Conversely, allow use of Django to manage content in RDF stores :-)
 
 ## Features
+
 * RDF serializer driven by editable mapping rules
 * Configureable ServiceBindings to RDF store APIs for different CRUD and inferencing tasks
 * RDF source load and push to designated RDF store
@@ -21,6 +22,7 @@ git clone https://github.com/rob-metalinkage/django-rdf-io
 pip install -e (where you put it)
 ```
 in your master django project:
+
 * add 'rdf_io' to the INSTALLED_APPS  in settings.py
 * add    ` url(r"^rdf_io/", include('rdf_io.urls'))`  to urls.py
 * optionally define setting for RDFSERVER and RDFSERVER_API
@@ -28,18 +30,22 @@ in your master django project:
 * run manage.py migrate
 
 ## Automated publishing of updated to RDF
+
 This is really only guaranteed for pushing additions and updates - deletions are not handled, although updates will tend to replace statements.
 
 ### on startup to enable (necessary after django-reload)
+
 NB - TODO a way to force this to happen automatically - needs to happen after both RDF_IO and the target models are installed, so cant go in initialisation for either model.
 
 `{SERVER_URL}/rdf_io/ctl_signals/sync`
 
 ### to turn on publishing for a model class
+
 1) check Auto-push flag is checked in an ObjectMapping for that model class
 2) save - should register a post_save signal for the model class
 
 ### to turn on/off  publishing for all model classes 
+
 `{SERVER_URL}/rdf_io/ctl_signals/(on/off)`
 
 ### 
@@ -48,18 +54,21 @@ NB - TODO a way to force this to happen automatically - needs to happen after bo
 ## Usage
 
 ### Optional RDF store configuration
+
 0) Set up any target RDF stores (currently supported are the LDP API and RDF4J/Apache Sesame API) - note RDF_IO can be used to import and serialise django objects as RDF without any RDF stores, and different RDF stores can be used for different objects
 1) Configure variables for use in setting up ServiceBindings to RDF stores and inferencing engines
 2) Set up ServiceBindings for your target stores (via the admin interface or migrations)
 3) Pre-load any static data and rules required by your reasoner (e.g. SHACL) - or set up migrations to load these using ImportedResource bound to appropriate ServiceBindings
 
 ### Basic RDF serialisation
+
 1) Define mappings for your target models using the admin interface $SERVER/admin/rdf_io
 2) To create an online resource use 
 		`{SERVER_URL}/rdf_io/to_rdf/{model_name}/id/{model_id}`
 		`{SERVER_URL}/rdf_io/to_rdf/{model_name}/key/{model_natural_key}`
 		
 ### RDF publishing		
+
 1) Configure one or more ServiceBindings and attach to the relevant ObjectMapping (if updates to that Object are to be published to RDF store - otherwise ServiceBindings can be directly bound to individual ImportedResource objects)
   NOTE: A service binding of type VALIDATION will cause checks to be performed - and on failure will abort the service chain and invoke on_fail bindings (not yet implemented) 
   NOTE: An service binding of type INFERENCING will augment the data to be stored, but not save it. It should be chained to PERSIST binding(s).
@@ -74,6 +83,7 @@ NOTE: for the 	/rdf_io/to_rdf/{model_name}/key/{model_natural_key} to work the t
 
 
 ### Inferencing
+
 Inferencing allows RDF based reasoning to generate richer views of inter-related data, and potentially derive a range of additional knowledge. This can all be done inside custom logic, but RDF_IO allows standards such as SHACL etc to be used to capture this and avoids hard-coding and hiding all these rules.
 
 when an object is saved, any enabled inferencing ServiceBindings will be applied before saving (stores may invoke loaded rules post-save)
@@ -105,6 +115,7 @@ where ?mainrepo is an object loaded to the inferencer to define the target data 
 '''
 
 ### Object Mappings
+
 Mappings to RDF are done for Django models. Each mapping consists of:
 1) an identifier mapping to generate the URI for the object
 2) a set of AttributeMapping elements that map a list of values to a RDF predicate
@@ -115,6 +126,7 @@ More than one object mapping may exist for a Django model. The RDF graph is the 
 (Note that a ServiceBinding may be bound to a specific mapping, but the default behaviour is for this to be used to find all ServiceBindings for a gioven django modeltype - and they all get the composite graph (this may be changed to supported publishing different graphs to different RDf stores in future.)
 
 ### Mapping syntax
+
 Mapping is non trivial - because the elements of your model may need to extracted from related models 
 
 Mapping is from elements in a Django model to a RDF value (a URI or a literal)

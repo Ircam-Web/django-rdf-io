@@ -21,7 +21,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     author='Rob Atkinson',
-    author_email='rob@metalinkage.com,au',
+    author_email='rob@metalinkage.com',
     license='BSD',
     long_description=read('README.md'),
     #download_url = "https://github.com/quinode/django-skosxl/tarball/%s" % (VERSION),
